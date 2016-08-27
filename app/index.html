@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="text/javascript" src="app.min.js"></script>
+    <script>
+      var appContainer = document.getElementById("app");
+      //var Elm = require('./app.min.js');
+      var app = Elm.Counter.embed(appContainer);
+    </script>
+  </body>
+</html>
