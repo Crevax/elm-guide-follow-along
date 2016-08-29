@@ -5,3 +5,6 @@ repl-temp-*
 
 # built files
 app/app.min.js
+
+# VS Code files
+.vscode
