@@ -3,7 +3,7 @@ ELM_OUTPUT := app/app.min.js
 
 .PHONY: build
 build:
-	elm-make src/elm-scripts/Counter.elm --output=$(ELM_OUTPUT)
+	elm-make src/elm-scripts/TextReverse.elm --output=$(ELM_OUTPUT)
 
 .PHONY: run
 run: build
