@@ -68,9 +68,14 @@ viewValidation : Model -> Html msg
 viewValidation model =
     let
         ( color, message ) =
-            if model.password == model.passwordAgain then
-                ( "green", "OK" )
-            else
-                ( "red", "Passwords do not match!" )
+            validateModel model
     in
         div [ style [ ( "color", color ) ] ] [ text message ]
+
+
+validateModel : Model -> ( String, String )
+validateModel model =
+    if model.password == model.passwordAgain then
+        ( "green", "OK" )
+    else
+        ( "red", "Passwords do not match!" )
