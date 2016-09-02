@@ -4,6 +4,9 @@ import Html exposing (..)
 import Html.App as Html
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
+import List exposing (..)
+import String exposing (..)
+import Regex exposing (..)
 
 
 main : Program Never
@@ -20,6 +23,10 @@ type alias Model =
     , password : String
     , passwordAgain : String
     }
+
+
+passwordRegex =
+    Regex.regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{1,}$"
 
 
 model : Model
@@ -67,15 +74,24 @@ view model =
 viewValidation : Model -> Html msg
 viewValidation model =
     let
-        ( color, message ) =
-            validateModel model
+        ( color, messages ) =
+            let
+                messages =
+                    validateModel model
+            in
+                if List.isEmpty (messages) then
+                    ( "green", [ "Ok" ] )
+                else
+                    ( "red", messages )
     in
-        div [ style [ ( "color", color ) ] ] [ text message ]
+        div [ style [ ( "color", color ) ] ] (List.map (\m -> p [] [ (text m) ]) messages)
 
 
-validateModel : Model -> ( String, String )
+validateModel : Model -> List String
 validateModel model =
-    if model.password == model.passwordAgain then
-        ( "green", "OK" )
-    else
-        ( "red", "Passwords do not match!" )
+    [ ( model.password /= model.passwordAgain, "Passwords do not match" )
+    , ( String.length model.password < 8, "Password must be at least 8 characters" )
+    , ( Regex.contains (passwordRegex) model.password /= True, "Password must contain at least 1 upper case letter, one lowercase letter, and one number" )
+    ]
+        |> List.filter fst
+        |> List.map snd
