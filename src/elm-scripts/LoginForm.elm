@@ -3,7 +3,7 @@ module LoginForm exposing (..)
 import Html exposing (..)
 import Html.App as Html
 import Html.Attributes exposing (..)
-import Html.Events exposing (onInput)
+import Html.Events exposing (onInput, onClick)
 import List exposing (..)
 import String exposing (..)
 import Regex exposing (..)
@@ -23,6 +23,7 @@ type alias Model =
     , password : String
     , passwordAgain : String
     , age : Int
+    , formSubmitted : Bool
     }
 
 
@@ -33,7 +34,7 @@ passwordRegex =
 
 model : Model
 model =
-    Model "" "" "" 0
+    Model "" "" "" 0 False
 
 
 
@@ -45,6 +46,7 @@ type Msg
     | Password String
     | PasswordAgain String
     | Age String
+    | SubmitForm
 
 
 update : Msg -> Model -> Model
@@ -66,6 +68,9 @@ update msg model =
             in
                 { model | age = ageInt }
 
+        SubmitForm ->
+            { model | formSubmitted = True }
+
 
 
 -- VIEW
@@ -78,7 +83,11 @@ view model =
         , input [ type' "password", placeholder "Password", onInput Password ] []
         , input [ type' "password", placeholder "Re-enter Password", onInput PasswordAgain ] []
         , input [ type' "number", onInput Age ] []
-        , viewValidation model
+        , input [ type' "submit", onClick SubmitForm ] [ text "Submit" ]
+        , if model.formSubmitted == True then
+            viewValidation model
+          else
+            div [] []
         ]
 
 
