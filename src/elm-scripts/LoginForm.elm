@@ -26,6 +26,7 @@ type alias Model =
     }
 
 
+passwordRegex : Regex.Regex
 passwordRegex =
     Regex.regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{1,}$"
 
