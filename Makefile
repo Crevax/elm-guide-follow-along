@@ -3,7 +3,7 @@ ELM_OUTPUT := app/app.min.js
 
 .PHONY: build
 build:
-	elm-make src/elm-scripts/LoginForm.elm --output=$(ELM_OUTPUT)
+	elm-make src/elm-scripts/DiceRoller.elm --output=$(ELM_OUTPUT)
 
 .PHONY: run
 run: build
